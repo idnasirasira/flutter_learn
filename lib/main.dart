@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Color color = Theme.of(context).primaryColor;
+    Color color = Colors.red[300];
 
     Widget buttonSection = Container(
         child: Row(
@@ -45,11 +45,11 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text("First Flutter Learning"),
+          title: Text("DaDesign"),
         ),
         body: ListView(
           children: <Widget>[
@@ -80,7 +80,7 @@ Column _buildButtonColumn(Color color, IconData icon, String label) {
         child: Text(
           label,
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 9,
             fontWeight: FontWeight.w400,
             color: color,
           ),
@@ -118,12 +118,57 @@ Widget titleSection = Container(
           ],
         ),
       ),
-      Icon(
-        Icons.star,
-        color: Colors.red[500],
-      ),
-      Text('41'),
+      FavoriteWidget(),
     ],
   ),
 );
+
+/* Subclass StatefullWidget */
+class FavoriteWidget extends StatefulWidget{
+  @override
+  _FavoriteWidgetState createState() => _FavoriteWidgetState();
+}
+
+/* Subclass State*/
+class _FavoriteWidgetState extends State<FavoriteWidget> {
+  bool _isFavorited = false;
+  int _favoriteCount = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(0),
+          child: IconButton(
+            icon: (_isFavorited ? Icon(Icons.star) : Icon(Icons.star_border)),
+            color: Colors.red[500],
+            onPressed: _toggleFavorite,
+          ),
+        ),
+        SizedBox(
+          width: 18,
+          child: Container(
+            child: Text('$_favoriteCount'),
+          ),
+        )
+      ],
+    );
+  }
+
+
+  void _toggleFavorite() {
+    setState(() {
+      if(_isFavorited) {
+        _favoriteCount -= 1;
+        _isFavorited = false;
+      } else {
+        _favoriteCount += 1;
+        _isFavorited = true;
+      }
+    });
+  }
+}
 
