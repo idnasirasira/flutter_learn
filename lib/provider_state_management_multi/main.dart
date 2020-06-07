@@ -4,6 +4,13 @@ import 'package:flutterapp/provider_state_management_multi/money.dart';
 import 'package:provider/provider.dart';
 
 
+/*
+* Notes
+* pubspec.yaml
+*   provider: ^3.0.0+1
+
+* */
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget{

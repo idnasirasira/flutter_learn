@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/*
+* Notes
+*
+*   shared_preferences: ^0.5.3+4
+
+* */
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget{
