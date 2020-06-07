@@ -7,85 +7,107 @@ class MyApp extends StatefulWidget{
   _MainAppState createState() => _MainAppState();
 }
 
-class _MainAppState extends State<MyApp> {
-  bool isSwitchOn = false;
-  Widget myWidget = Container(
-    width: 200,
-    height: 200,
-    decoration: BoxDecoration(
-      color: Colors.green,
-      border: Border.all(
-          color: Colors.black,
-          width: 2,
-      )
-    ),
-  );
+class _MainAppState extends State<MyApp>{
+  double customPadding = 5;
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text('API'),
-            ),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      home: Scaffold(
+        appBar: AppBar(
+            title: Text("Aninmated Padding")
+        ),
+        body: Column(
+          children: <Widget>[
+            /*Flex_1*/
+            Flexible(
+              flex: 1,
+              child: Row(
                 children: <Widget>[
-                  AnimatedSwitcher(
-                    child: myWidget,
-                    duration: Duration(seconds: 1),
-                    transitionBuilder: (child, animation) => ScaleTransition(
-                      scale: animation,
-                      child: child,
+                  Flexible(
+                    flex: 1,
+                    child: AnimatedPadding(
+                      duration: Duration(seconds: 1),
+                      padding: EdgeInsets.all(customPadding),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            customPadding = 20;
+                          });
+                        },
+                        child: Container(
+                          color: Colors.red,
+                        ),
+                      ),
+                    )
+
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: AnimatedPadding(
+                      duration: Duration(seconds: 1),
+                      padding: EdgeInsets.all(customPadding),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            customPadding = 20;
+                          });
+                        },
+                        child: Container(
+                          color: Colors.green,
+                        ),
+                      ),
+                    )
+                  )
+                ],
+              ),
+            ),
+            /*Flex_2*/
+            Flexible(
+              flex: 1,
+              child: Row(
+                children: <Widget>[
+                  Flexible(
+                    flex: 1,
+                    child: AnimatedPadding(
+                      duration: Duration(seconds: 1),
+                      padding: EdgeInsets.all(customPadding),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            customPadding = 20;
+                          });
+                        },
+                        child: Container(
+                          color: Colors.blue,
+                        ),
+                      ),
                     )
                   ),
-                  Switch(
-                    activeColor: Colors.red,
-                    inactiveThumbColor: Colors.green,
-                    inactiveTrackColor: Colors.green[200],
-                    value: isSwitchOn,
-                    onChanged: (newVal) {
-                      isSwitchOn = newVal;
-                      setState(() => {
-                        if(isSwitchOn == true){
-//                          myWidget = Text("Switch: ON")
-                          myWidget = Container(
-                            key: ValueKey(1),
-                            width: 200,
-                            height: 200,
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 2,
-                                )
-                              )
-                            )
-                        }else{
-                          myWidget = Container(
-                            key: ValueKey(2),
-                            width: 200,
-                            height: 200,
-                            decoration: BoxDecoration(
-                            color: Colors.green,
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 2,
-                              )
-                            ),
-                          )
-                        }
-
-
-                      });
-                    }
+                  Flexible(
+                    flex: 1,
+                    child: AnimatedPadding(
+                      duration: Duration(seconds: 1),
+                      padding: EdgeInsets.all(customPadding),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            customPadding = 20;
+                          });
+                        },
+                        child: Container(
+                          color: Colors.yellow,
+                        ),
+                      ),
+                    )
                   )
                 ],
               ),
             )
+          ],
         )
+      ),
     );
   }
 
