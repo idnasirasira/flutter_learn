@@ -57,16 +57,16 @@ class _MainAppState extends State<MyApp>{
                       Text("Balance"),
                       Container(
                         child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Consumer<Money>(
-                            builder: (context, money, _) => Text(
-                                money.balance.toString(),
-                                style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.w700
-                                )
-                            ),
-                          )
+                            alignment: Alignment.centerRight,
+                            child: Consumer<Money>(
+                              builder: (context, money, _) => Text(
+                                  money.balance.toString(),
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.w700
+                                  )
+                              ),
+                            )
 
                         ),
                         height: 30,
