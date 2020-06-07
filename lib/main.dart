@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutterapp/provider_state_management/application_color.dart';
+import 'package:provider/provider.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -9,73 +11,66 @@ class MyApp extends StatefulWidget{
 }
 
 class _MainAppState extends State<MyApp>{
-  TextEditingController textController = TextEditingController(text: "Default");
-  bool isSwitchOn = false;
-
-  void saveData() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString("name", textController.text);
-    pref.setBool("switchStatus", isSwitchOn);
-  }
-
-  Future<String> getName() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    return pref.getString("name") ?? "Default";
-  }
-
-  Future<bool> getSwitchStatus() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    return pref.getBool("switchStatus") ?? false;
-  }
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-            title: Text("Shared Preference Example")
-        ),
-        body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                TextField(
-                  controller: textController,
-                ),
-                Switch(
-                  value: isSwitchOn,
-                  onChanged: (newVal) {
-                    setState(() {
-                      isSwitchOn = newVal;
-                    });
-                  },
-                ),
-                RaisedButton(
-                  child: Text("Save"),
-                  onPressed: () {
-                    saveData();
-                  },
-                ),
-                RaisedButton(
-                  child: Text("Load"),
-                  onPressed: () {
-                    getName().then((s) {
-                      textController.text = s;
-                      setState(() {});
-                    });
+      home: ChangeNotifierProvider<ApplicationColor>(
+        create: (context) => ApplicationColor(),
+        child: Scaffold(
+          appBar: AppBar(
+              title: Consumer<ApplicationColor>(
+                builder: (context, applicationColor, _) =>
+                    Text(
+                      "Provider State Management",
+                      style: TextStyle(color: applicationColor.color),
+                    ),
+              )
 
-                    getSwitchStatus().then((s) {
-                      isSwitchOn = s;
-                      setState(() {});
-                    });
-                  },
-                )
-
-              ],
-            )
+          ),
+          body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Consumer<ApplicationColor>(
+                        builder: (context, applicationColor, _) =>
+                            AnimatedContainer(
+                              width: 100,
+                              height: 100,
+                              margin: EdgeInsets.all(5),
+                              color: applicationColor.color,
+                              duration: Duration(seconds: 1),
+                            ),
+                      ),
+                      Container(
+                          child: Text("BLUE"),
+                          margin: EdgeInsets.all(3)
+                      ),
+                      Consumer<ApplicationColor>(
+                        builder: (context, applicationColor, _) =>
+                            Switch(
+                                value: applicationColor.isRed,
+                                onChanged: (val) {
+                                  applicationColor.isRed = val;
+                                }
+                            ),
+                      ),
+                      Container(
+                          child: Text("RED"),
+                          margin: EdgeInsets.all(3)
+                      )
+                    ],
+                  )
+                ],
+              )
+          ),
         ),
-      ),
+      )
+
+
     );
   }
 
