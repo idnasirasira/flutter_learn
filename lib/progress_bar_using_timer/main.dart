@@ -13,40 +13,40 @@ class MyApp extends StatelessWidget{
           title: Text("Progress Bar with Timer"),
         ),
         body: Center(
-          child: ChangeNotifierProvider<TimeState>(
-            create: (context) => TimeState(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Consumer<TimeState>(
-                  builder: (context, timeState, _) => CustomProgressBar(
-                    width: 200,
-                    value: timeState.time,
-                    totalValue: 15,
-                  ),
-                ),
+            child: ChangeNotifierProvider<TimeState>(
+                create: (context) => TimeState(),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Consumer<TimeState>(
+                      builder: (context, timeState, _) => CustomProgressBar(
+                        width: 200,
+                        value: timeState.time,
+                        totalValue: 15,
+                      ),
+                    ),
 
-                SizedBox(height:10,),
-                Consumer<TimeState>(
-                  builder: (context, timeState, _) => RaisedButton(
-                    color: Colors.red,
-                    child: Text("Start"),
-                    onPressed: () {
-                      Timer.periodic(Duration(seconds: 1), (timer){
-                        if(timeState.time == 0){
-                          timer.cancel();
-                        }else{
-                          timeState.time -= 1;
-                        }
-                      });
-                    },
-                  ),
-                ),
+                    SizedBox(height:10,),
+                    Consumer<TimeState>(
+                      builder: (context, timeState, _) => RaisedButton(
+                        color: Colors.red,
+                        child: Text("Start"),
+                        onPressed: () {
+                          Timer.periodic(Duration(seconds: 1), (timer){
+                            if(timeState.time == 0){
+                              timer.cancel();
+                            }else{
+                              timeState.time -= 1;
+                            }
+                          });
+                        },
+                      ),
+                    ),
 
-              ],
+                  ],
+                )
             )
-          )
 
 
         ),
@@ -80,8 +80,8 @@ class CustomProgressBar extends StatelessWidget{
               width: width,
               height: 10,
               decoration: BoxDecoration(
-                color: Colors.grey[400],
-                borderRadius: BorderRadius.circular(5)
+                  color: Colors.grey[400],
+                  borderRadius: BorderRadius.circular(5)
               ),
             ),
             Material(
@@ -92,8 +92,8 @@ class CustomProgressBar extends StatelessWidget{
                 height: 10,
                 duration: Duration(milliseconds: 500),
                 decoration: BoxDecoration(
-                  color: (ratio < 0.3) ? Colors.red : (ratio < 0.6) ? Colors.amber[400] : Colors.lightGreen[400],
-                  borderRadius: BorderRadius.circular(5)
+                    color: (ratio < 0.3) ? Colors.red : (ratio < 0.6) ? Colors.amber[400] : Colors.lightGreen[400],
+                    borderRadius: BorderRadius.circular(5)
                 ),
               ),
             )
