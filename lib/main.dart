@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/http/model/post_result_model.dart';
-import 'package:flutterapp/http/model/user_model.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,10 +8,18 @@ class MyApp extends StatefulWidget{
 }
 
 class _MainAppState extends State<MyApp> {
-  PostResult postResult;
-  User user;
-
-  String outputListUser = "Data";
+  bool isSwitchOn = false;
+  Widget myWidget = Container(
+    width: 200,
+    height: 200,
+    decoration: BoxDecoration(
+      color: Colors.green,
+      border: Border.all(
+          color: Colors.black,
+          width: 2,
+      )
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -27,41 +33,56 @@ class _MainAppState extends State<MyApp> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text(postResult != null ? "POST : " + postResult.id + " | " + postResult.name + " | " + postResult.job + " | " + postResult.created : "Data Tidak Ada"),
-                  RaisedButton(
-                    onPressed: () => {
-                      PostResult.connectToAPI("Badu", "Dokter").then((value) {
-                        postResult = value;
-                        setState(() => {});
-                      })
-                    },
-                    child: Text("POST"),
+                  AnimatedSwitcher(
+                    child: myWidget,
+                    duration: Duration(seconds: 1),
+                    transitionBuilder: (child, animation) => ScaleTransition(
+                      scale: animation,
+                      child: child,
+                    )
                   ),
-                  Text(user != null ? "GET : " + user.id.toString() +" | "+ user.firstName : "Data Tidak Ada"),
-                  RaisedButton(
-                    onPressed: () => {
-                      User.connectToAPI("5").then((value) {
-                        user = value;
-                        setState(() => {});
-                      })
-                    },
-                    child: Text("GET"),
-                  ),
-                  Text(outputListUser != null ? outputListUser : "List User Not Found"),
-                  RaisedButton(
-                    onPressed: () => {
-                      User.getUsers("2").then((users) {
-                        for(int i = 0; i < users.length; i++){
-//                          print(users[i].id.toString());
-                          outputListUser = outputListUser + "[ " + users[i].id.toString() + " ]";
+                  Switch(
+                    activeColor: Colors.red,
+                    inactiveThumbColor: Colors.green,
+                    inactiveTrackColor: Colors.green[200],
+                    value: isSwitchOn,
+                    onChanged: (newVal) {
+                      isSwitchOn = newVal;
+                      setState(() => {
+                        if(isSwitchOn == true){
+//                          myWidget = Text("Switch: ON")
+                          myWidget = Container(
+                            key: ValueKey(1),
+                            width: 200,
+                            height: 200,
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 2,
+                                )
+                              )
+                            )
+                        }else{
+                          myWidget = Container(
+                            key: ValueKey(2),
+                            width: 200,
+                            height: 200,
+                            decoration: BoxDecoration(
+                            color: Colors.green,
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 2,
+                              )
+                            ),
+                          )
                         }
-                        setState(() => {});
-                      })
-                    },
-                    child: Text("GET List"),
+
+
+                      });
+                    }
                   )
                 ],
-
               ),
             )
         )
