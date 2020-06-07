@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/http/model/post_result_model.dart';
 import 'package:flutterapp/http/model/user_model.dart';
-import 'package:http/http.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,6 +12,8 @@ class MyApp extends StatefulWidget{
 class _MainAppState extends State<MyApp> {
   PostResult postResult;
   User user;
+
+  String outputListUser = "Data";
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +46,19 @@ class _MainAppState extends State<MyApp> {
                       })
                     },
                     child: Text("GET"),
+                  ),
+                  Text(outputListUser != null ? outputListUser : "List User Not Found"),
+                  RaisedButton(
+                    onPressed: () => {
+                      User.getUsers("2").then((users) {
+                        for(int i = 0; i < users.length; i++){
+//                          print(users[i].id.toString());
+                          outputListUser = outputListUser + "[ " + users[i].id.toString() + " ]";
+                        }
+                        setState(() => {});
+                      })
+                    },
+                    child: Text("GET List"),
                   )
                 ],
 
