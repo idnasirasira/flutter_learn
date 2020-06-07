@@ -13,10 +13,10 @@ class _MainAppState extends State<MyApp>{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BlocProvider<ColorBloc>(
-        builder: (context) => ColorBloc(),
-        child: MainPage(),
-      )
+        home: BlocProvider<ColorBloc>(
+          builder: (context) => ColorBloc(),
+          child: MainPage(),
+        )
     );
   }
 
