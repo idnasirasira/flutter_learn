@@ -14,7 +14,7 @@ class _MainAppState extends State<MyApp>{
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-            title: Text("BLoC")
+            title: Text("BLoC State Management")
         ),
         body: Center(
             child: Text("Ini Text")
